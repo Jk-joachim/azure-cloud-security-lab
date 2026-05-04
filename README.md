@@ -89,7 +89,7 @@ sudo apt update && sudo apt upgrade -y
 ---
 
 💾 4. Secure Storage
-🛠️ Steps
+### 🛠️ Steps
 1. Create Storage Account
 2. Disable public access
 3. Enable HTTPS only
@@ -101,7 +101,7 @@ sudo apt update && sudo apt upgrade -y
 ---
 
 📊 5. Logging & Monitoring
-🛠️ Steps
+### 🛠️ Steps
 1. Create Log Analytics Workspace
 2. Install Azure Monitor Agent
 3. Configure Data Collection Rule
@@ -113,7 +113,7 @@ sudo apt update && sudo apt upgrade -y
 ---
 
 🛡️ 6. Threat Detection
-🛠️ Steps
+### 🛠️ Steps
 1. Enable Microsoft Defender for Cloud
 2. Turn on Defender for Servers
 3. Review recommendations
@@ -124,7 +124,7 @@ sudo apt update && sudo apt upgrade -y
 ---
 
 🧠 7. SIEM Setup (Microsoft Sentinel)
-🛠️ Steps
+### 🛠️ Steps
 1. Add Log Analytics Workspace to Sentinel
 2. Enable Data Connectors
 3. Create detection rule
