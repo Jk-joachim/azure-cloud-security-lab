@@ -37,7 +37,7 @@ This project demonstrates how to design and implement a secure cloud environment
 2. Add role assignment  
 3. Assign:
    - User Administrator  
-   - Security Reader  
+   - Contributor  
 
 #### Enable MFA
 1. Entra ID → Security → Conditional Access  
