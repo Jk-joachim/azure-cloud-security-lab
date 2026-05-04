@@ -13,7 +13,7 @@ This project demonstrates how to design and implement a secure cloud environment
 ---
 
 ## 🏗️ Architecture
-![Architecture](screenshots/vnet.png)
+![Architecture](screenshots/project_Architecture.png)
 
 ---
 
@@ -62,7 +62,7 @@ This project demonstrates how to design and implement a secure cloud environment
 - Deny all others  
 
 📸 Screenshot:  
-![NSG](screenshots/nsg-rule.png)
+![Inbound Rule](screenshots/inbound_rule.png)
 
 ---
 
@@ -83,6 +83,9 @@ PermitRootLogin no
 PasswordAuthentication no
 sudo apt update && sudo apt upgrade -y
 
+📸 Screenshot:  
+![VM Hardening](screenshots/vmhardening.png)
+
 ---
 
 💾 4. Secure Storage
@@ -93,6 +96,7 @@ sudo apt update && sudo apt upgrade -y
 4. Disable anonymous access
 
 📸 Screenshot:
+![Storage](screenshots/storageaccount.png)
 
 ---
 
@@ -102,6 +106,9 @@ sudo apt update && sudo apt upgrade -y
 2. Install Azure Monitor Agent
 3. Configure Data Collection Rule
 4. Enable Syslog (auth, authpriv)
+
+📸 Screenshot:
+![Syslog DCR](screenshots/syslogDCR.png)
 
 ---
 
@@ -123,12 +130,19 @@ sudo apt update && sudo apt upgrade -y
 3. Create detection rule
 - 🔍 Detection Query
 Syslog
-| where SyslogMessage contains "Failed password"
-| parse SyslogMessage with * "from " IP " port" *
-| summarize Attempts = count() by IP, bin(TimeGenerated, 5m)
+| where SyslogMessage has_any ("Invalid user", "Failed publickey", "Connection closed")
+| extend SourceIP = extract(@"([0-9]{1,3}(\.[0-9]{1,3}){3})", 1, SyslogMessage)
+| summarize 
+    Attempts = count(),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated),
+    SampleMessage = any(SyslogMessage)
+    by SourceIP, Computer, bin(TimeGenerated, 5m), _ResourceId
 | where Attempts > 5
 
+
 📸 Screenshot:
+![Syslog DCR](screenshots/syslogDCR.png)
 
 ---
 
@@ -138,7 +152,14 @@ Syslog
 - Access restricted ports
 - 🔍 Investigation
 Syslog
-| where SyslogMessage contains "Failed password"
+| where SyslogMessage has_any ("Invalid user", "Failed publickey", "Connection closed")
+
+📸 Screenshot:
+![Incident](screenshots/Incident_Alert.png)
+
+
+📸 Screenshot:
+![Simulation](screenshots/attemptedloginlog.png)
 
 ---
 
